@@ -1,16 +1,15 @@
 package com.webservices.project.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,10 +21,9 @@ public class Category implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
-  @ManyToMany
-  @MapsId("Id")
-  @JoinColumn(name = "sproduct_id")
-  private List<Product> products = new ArrayList<>();
+  @JsonIgnore
+  @ManyToMany(mappedBy = "categories")
+  private Set<Product> products = new HashSet<>();
 
   public Category() {
     super();
@@ -52,21 +50,13 @@ public class Category implements Serializable {
     this.name = name;
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id);
-  }
-
-  public List<Product> getProducts() {
+  public Set<Product> getProducts() {
     return products;
   }
 
-  public void addProduct(Product product) {
-    products.add(product);
-  }
-
-  public void removeProduct(Product product) {
-    products.remove(product);
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
   }
 
   @Override
