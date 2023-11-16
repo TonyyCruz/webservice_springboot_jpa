@@ -23,7 +23,11 @@ public class UserService {
     return obj.get();
   }
 
-  public User insert(User user) {
+  public User save(User user) {
     return repository.save(user);
+  }
+
+  public void deleteById(Long id) {
+    repository.deleteById(id);
   }
 }

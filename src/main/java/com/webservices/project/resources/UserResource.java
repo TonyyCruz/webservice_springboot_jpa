@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,10 +34,16 @@ public class UserResource {
   }
 
   @PostMapping
-  public ResponseEntity<User> findById(@RequestBody User userObj) {
-    User user = service.insert(userObj);
+  public ResponseEntity<User> create(@RequestBody User userObj) {
+    User user = service.save(userObj);
     ServletUriComponentsBuilder servletUri = ServletUriComponentsBuilder.fromCurrentRequest();
     URI uri = servletUri.path("/{id}").buildAndExpand(user.getId()).toUri();
     return ResponseEntity.created(uri).body(user);
+  }
+
+  @DeleteMapping(value = "{id}")
+  public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    service.deleteById(id);
+    return ResponseEntity.noContent().build();
   }
 }
