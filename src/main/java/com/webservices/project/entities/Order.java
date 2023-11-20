@@ -92,10 +92,10 @@ public class Order implements Serializable {
     return this.payment;
   }
 
-  public Double totalPrice() {
+  public Double getTotal() {
     Double total = 0.0;
     for (OrderItem item : items)
-      total += item.getPrice() * item.getQuantity();
+      total += item.getSubTotal();
     return total;
   }
 
