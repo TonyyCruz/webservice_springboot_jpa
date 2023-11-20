@@ -23,11 +23,23 @@ public class UserService {
     return obj.get();
   }
 
-  public User save(User user) {
+  public User insert(User user) {
     return repository.save(user);
   }
 
   public void deleteById(Long id) {
     repository.deleteById(id);
+  }
+
+  public User update(Long id, User user) {
+    User userEntity = repository.getReferenceById(id);
+    updateUser(userEntity, user);
+    return repository.save(userEntity);
+  }
+
+  private void updateUser(User userEntity, User user) {
+    userEntity.setName(user.getName());
+    userEntity.setEmail(user.getEmail());
+    userEntity.setPhone(user.getPhone());
   }
 }
