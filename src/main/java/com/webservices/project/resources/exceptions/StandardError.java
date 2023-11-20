@@ -11,8 +11,8 @@ public class StandardError implements Serializable {
       timezone = "GMT")
   private Instant timestamp;
   private Integer status;
-  private String error;
   private String message;
+  private String error;
   private String path;
 
   public StandardError() {}
